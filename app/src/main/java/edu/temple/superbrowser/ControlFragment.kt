@@ -1,12 +1,16 @@
 package edu.temple.superbrowser
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
 
 
@@ -14,7 +18,17 @@ class ControlFragment : Fragment() {
 
     private lateinit var urlEditText: EditText
     private lateinit var browser: ControlInterface
+    private var currentTitle: String = ""
+    private var currentUrl: String = ""
 
+    private val bookmarkLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val urlToOpen = result.data?.getStringExtra("url")
+            urlToOpen?.let {
+                // create a function that loads the bookmark url to a tab
+            }
+        }
+    }
     // Fetch ViewModel instance scoped against parent fragment
     private val pageDataViewModel : PageDataViewModel by lazy {
         ViewModelProvider(requireParentFragment())[PageDataViewModel::class.java]
@@ -40,6 +54,23 @@ class ControlFragment : Fragment() {
             findViewById<View>(R.id.backIV).setOnClickListener { browser.backPage() }
             findViewById<View>(R.id.nextIV).setOnClickListener { browser.nextPage() }
             findViewById<View>(R.id.new_page).setOnClickListener { browser.newPage() }
+            findViewById<View>(R.id.share).setOnClickListener {
+                if (currentUrl.isNotEmpty() && !currentUrl.startsWith("about:blank")) {
+                    val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                        type = "text/plain"
+                        putExtra(Intent.EXTRA_TEXT, currentUrl)
+                    }
+                    startActivity(Intent.createChooser(shareIntent, "Share URL"))
+                }
+            }
+            findViewById<View>(R.id.addBookmark).setOnClickListener {
+                saveBookmark()
+            }
+
+            findViewById<View>(R.id.bookmarks).setOnClickListener {
+                val intent = Intent(requireContext(), )
+                bookmarkLauncher.launch(intent)
+            }
         }
     }
 
@@ -49,6 +80,27 @@ class ControlFragment : Fragment() {
         pageDataViewModel.getCurrentUrl().observe(viewLifecycleOwner){
             urlEditText.setText(it)
         }
+
+        pageDataViewModel.getCurrentTitle().observe(viewLifecycleOwner) {
+            currentTitle = it
+        }
+    }
+
+    private fun saveBookmark() {
+        if (currentUrl.isEmpty() || currentUrl == "about:blank" || currentTitle.isEmpty()) {
+            Toast.makeText(context, "Cannot bookmark this page", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val bookmarks = BookmarkManager.getBookmarks(requireContext())
+
+        if (bookmarks.any { it.url == currentUrl }) {
+            Toast.makeText(context, "Bookmark already exists!", Toast.LENGTH_SHORT).show()
+        }
+        else {
+            BookmarkManager.saveBookmark(requireContext(), Page(currentTitle, currentUrl))
+            Toast.makeText(context, "Bookmark Saved", Toast.LENGTH_SHORT).show()
+        }
     }
 
     interface ControlInterface {
@@ -56,6 +108,7 @@ class ControlFragment : Fragment() {
         fun nextPage()
         fun backPage()
         fun newPage()
+        fun loadUrlInNewTab(url: String)
     }
 
 }
