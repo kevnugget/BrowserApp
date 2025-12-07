@@ -44,6 +44,14 @@ class TabFragment : Fragment(), ControlFragment.ControlInterface, PageFragment.P
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        val page = browserViewModel.getPage(tabId)
+        if (page.url.isNotEmpty()) {
+            pageFragment.loadUrl(page.url)
+        }
+    }
+
     override fun loadUrl(url: String) {
         pageFragment.loadUrl(url)
     }
@@ -61,8 +69,13 @@ class TabFragment : Fragment(), ControlFragment.ControlInterface, PageFragment.P
         browserActivity.newPage()
     }
 
+    override fun loadUrlInNewTab(url: String) {
+        browserActivity.loadUrlInNewTab(url)
+    }
+
     interface ControlInterface {
         fun newPage()
+        fun loadUrlInNewTab(url: String)
     }
 
     companion object {

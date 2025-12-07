@@ -68,7 +68,7 @@ class ControlFragment : Fragment() {
             }
 
             findViewById<View>(R.id.bookmarks).setOnClickListener {
-                val intent = Intent(requireContext(), )
+                val intent = Intent(requireContext(), BookmarkActivity::class.java)
                 bookmarkLauncher.launch(intent)
             }
         }

@@ -19,9 +19,9 @@ class PageDataViewModel  : ViewModel(){
         currentUrl.value = url
     }
 
-    fun getCurrentTitle() : LiveData<String> = currentUrl
+    fun getCurrentTitle() : LiveData<String> = currentTitle
 
     fun setCurrentTitle(url: String) {
-        currentUrl.value = url
+        currentTitle.value = url
     }
 }
