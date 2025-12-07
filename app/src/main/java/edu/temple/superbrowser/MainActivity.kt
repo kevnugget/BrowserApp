@@ -72,4 +72,10 @@ class MainActivity : AppCompatActivity(), TabFragment.ControlInterface{
         browserViewModel.addTab()
         viewPager.setCurrentItem(browserViewModel.getNumberOfTabs() - 1, true)
     }
+
+    override fun loadUrlInNewTab(url: String) {
+        browserViewModel.addTab(Page("Loading...", url))
+        viewPager.adapter?.notifyDataSetChanged()
+        viewPager.setCurrentItem(browserViewModel.getNumberOfTabs()-1, true)
+    }
 }
