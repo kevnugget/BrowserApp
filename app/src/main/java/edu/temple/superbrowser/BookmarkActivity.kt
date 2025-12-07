@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -21,6 +22,9 @@ class BookmarkActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         loadList(recyclerView)
+        findViewById<View>(R.id.close).setOnClickListener {
+            finish()
+        }
     }
 
     private fun loadList(recyclerView: RecyclerView) {
