@@ -56,6 +56,7 @@ class PageFragment : Fragment() {
                         host?.let {
                             pageDataViewModel.setCurrentUrl(this)
                             view?.title?.run {
+                                pageDataViewModel.setCurrentTitle(this)
                                 pageInterface.updatePage(Page(this, url))
                             }
                         }
