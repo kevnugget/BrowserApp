@@ -33,10 +33,12 @@
         android:id="@+id/close"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        app:layout_constraintTop_toBottomOf="@id/headerTv"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/headerTv"
+        app:layout_constraintVertical_bias="0.87"
         app:srcCompat="@drawable/x" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
