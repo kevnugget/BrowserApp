@@ -56,33 +56,4 @@
         app:layout_constraintEnd_toStartOf="@+id/goIV"
         app:layout_constraintStart_toEndOf="@+id/new_page"
         tools:layout_editor_absoluteY="686dp" />
-
-    <ImageButton
-        android:id="@+id/addBookmark"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/addbookmark"
-        app:layout_constraintBottom_toBottomOf="@+id/bookmarks"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/bookmarks"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:src="@drawable/savedbookmarks"
-        app:layout_constraintBottom_toBottomOf="@+id/share"
-        app:layout_constraintStart_toEndOf="@+id/addBookmark"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <ImageButton
-        android:id="@+id/share"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:src="@drawable/share"
-        app:layout_constraintStart_toEndOf="@+id/bookmarks"
-        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
