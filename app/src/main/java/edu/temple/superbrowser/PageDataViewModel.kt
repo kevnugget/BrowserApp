@@ -9,9 +9,19 @@ class PageDataViewModel  : ViewModel(){
         MutableLiveData()
     }
 
+    private val currentTitle : MutableLiveData<String> by lazy {
+        MutableLiveData()
+    }
+
     fun getCurrentUrl() : LiveData<String> = currentUrl
 
     fun setCurrentUrl(url: String) {
+        currentUrl.value = url
+    }
+
+    fun getCurrentTitle() : LiveData<String> = currentUrl
+
+    fun setCurrentTitle(url: String) {
         currentUrl.value = url
     }
 }
