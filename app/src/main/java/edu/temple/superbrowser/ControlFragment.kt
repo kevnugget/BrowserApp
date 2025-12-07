@@ -21,16 +21,8 @@ class ControlFragment : Fragment() {
     private var currentTitle: String = ""
     private var currentUrl: String = ""
 
-    private val bookmarkLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            val urlToOpen = result.data?.getStringExtra("url")
-            urlToOpen?.let {
-                // create a function that loads the bookmark url to a tab
-            }
-        }
-    }
     // Fetch ViewModel instance scoped against parent fragment
-    private val pageDataViewModel : PageDataViewModel by lazy {
+    private val pageDataViewModel: PageDataViewModel by lazy {
         ViewModelProvider(requireParentFragment())[PageDataViewModel::class.java]
     }
 
@@ -54,35 +46,15 @@ class ControlFragment : Fragment() {
             findViewById<View>(R.id.backIV).setOnClickListener { browser.backPage() }
             findViewById<View>(R.id.nextIV).setOnClickListener { browser.nextPage() }
             findViewById<View>(R.id.new_page).setOnClickListener { browser.newPage() }
-            findViewById<View>(R.id.share).setOnClickListener {
-                if (currentUrl.isNotEmpty() && !currentUrl.startsWith("about:blank")) {
-                    val shareIntent = Intent(Intent.ACTION_SEND).apply {
-                        type = "text/plain"
-                        putExtra(Intent.EXTRA_TEXT, currentUrl)
-                    }
-                    startActivity(Intent.createChooser(shareIntent, "Share URL"))
-                }
-            }
-            findViewById<View>(R.id.addBookmark).setOnClickListener {
-                saveBookmark()
-            }
-
-            findViewById<View>(R.id.bookmarks).setOnClickListener {
-                val intent = Intent(requireContext(), BookmarkActivity::class.java)
-                bookmarkLauncher.launch(intent)
-            }
         }
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         pageDataViewModel.getCurrentUrl().observe(viewLifecycleOwner){
             urlEditText.setText(it)
-        }
-
-        pageDataViewModel.getCurrentTitle().observe(viewLifecycleOwner) {
-            currentTitle = it
         }
     }
 

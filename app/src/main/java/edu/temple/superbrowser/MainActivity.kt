@@ -1,6 +1,11 @@
 package edu.temple.superbrowser
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,6 +32,16 @@ class MainActivity : AppCompatActivity(), TabFragment.ControlInterface{
     private val browserViewModel : BrowserViewModel by lazy {
         ViewModelProvider(this)[BrowserViewModel::class.java]
     }
+
+    private val bookmarkLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val urlToOpen = result.data?.getStringExtra("url")
+                urlToOpen?.let {
+                    loadUrlInNewTab(it)
+                }
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +80,37 @@ class MainActivity : AppCompatActivity(), TabFragment.ControlInterface{
             recyclerView?.adapter?.notifyItemChanged(it)
         }
 
+    findViewById<View>(R.id.share).setOnClickListener {
+        val currentPage = browserViewModel.getPage(viewPager.currentItem)
+        if (currentPage.url.isNotEmpty()) {
+            val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                type = "text/plain"
+                putExtra(Intent.EXTRA_TEXT, currentPage.url)
+            }
+            startActivity(Intent.createChooser(shareIntent, "Share URL"))
+        }
     }
+
+    findViewById<View>(R.id.addBookmark).setOnClickListener {
+        val currentPage = browserViewModel.getPage(viewPager.currentItem)
+        if (currentPage.title.isNotEmpty() && currentPage.url.isNotEmpty()) {
+            val bookmarks = BookmarkManager.getBookmarks(this)
+            if (bookmarks.any { it.url == currentPage.url }) {
+                Toast.makeText(this, "Bookmark already exists!", Toast.LENGTH_SHORT).show()
+            } else {
+                BookmarkManager.saveBookmark(this, currentPage)
+                Toast.makeText(this, "Bookmark Saved", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Toast.makeText(this, "Cannot bookmark empty page", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    findViewById<View>(R.id.bookmarks).setOnClickListener {
+        val intent = Intent(this, BookmarkActivity::class.java)
+        bookmarkLauncher.launch(intent)
+    }
+}
 
     // TabFragment.ControlInterface callback
     override fun newPage() {
