@@ -22,7 +22,7 @@ class BrowserViewModel : ViewModel(){
         return updateProxy
     }
 
-    fun addTab() {
+    fun addTab(page: Page = Page()) {
         tabs.add(Page())
         updateProxy.value = tabs.size - 1
     }
