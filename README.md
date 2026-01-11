@@ -39,7 +39,7 @@ Follow these steps to set up the project in Android Studio:
 
 1. **Clone the Repository**
    ```bash
-   git clone [https://github.com/yourusername/superbrowser-android.git](https://github.com/yourusername/superbrowser-android.git)
+   git clone https://github.com/kevnugget/BrowserApp.git
    ```
 
 2. **Open the Project**
