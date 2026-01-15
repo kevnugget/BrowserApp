@@ -10,7 +10,7 @@
 * **Navigation Controls:** Full support for Back, Forward, and "Go" actions, along with an intelligent URL "fixer" that handles malformed addresses and search queries.
 * **State Persistence:** Automatically restores open tabs and individual `WebView` histories following configuration changes or activity restarts.
 
-## 🛠 Tech Stack
+## Tech Stack
 * **Language:** Kotlin
 * **UI Components:** Fragments, `ViewPager2`, `FragmentContainerView`, `WebView`
 * **Jetpack Libraries:** `ViewModel`, `LiveData`, `FragmentStateAdapter`
