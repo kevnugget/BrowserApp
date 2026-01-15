@@ -1,9 +1,9 @@
 # SuperBrowser (Multi-Tab Android Browser)
 
-## 📌 Project Overview
+## Project Overview
 **SuperBrowser** is a multi-tab web browser for Android that utilizes a modern fragment-based architecture. It supports concurrent browsing sessions through a tabbed interface, providing independent navigation histories and persistent UI states for each tab. The application is built using **Kotlin** and adheres to the **MVVM (Model-View-ViewModel)** design pattern.
 
-## 🚀 Key Features
+## Key Features
 * **Multi-Tab Interface:** Employs `ViewPager2` and `FragmentStateAdapter` to manage a dynamic list of browsing tabs with fluid swipe navigation.
 * **Independent Tab State:** Utilizes parent-scoped `ViewModels` to ensure each tab maintains its own unique URL, navigation history, and `WebView` state.
 * **Dynamic Tab Creation:** Integrated "New Tab" functionality within the control bar to instantly instantiate and navigate to new browsing sessions.
@@ -16,7 +16,7 @@
 * **Jetpack Libraries:** `ViewModel`, `LiveData`, `FragmentStateAdapter`
 * **Architecture:** MVVM with Parent-Child Fragment Scoping
 
-## 🏗 Architecture & Components
+## Architecture & Components
 
 
 
@@ -33,7 +33,7 @@ To prevent data "leaking" between tabs, a `PageDataViewModel` is scoped specific
 
 
 
-## 📥 Installation
+## Installation
 
 Follow these steps to set up the project in Android Studio:
 
@@ -49,7 +49,7 @@ Follow these steps to set up the project in Android Studio:
 3. **Sync Gradle**
    * Android Studio will automatically prompt you to sync Gradle files. Ensure you have an active internet connection.
 
-## 🚀 Execution
+## Execution
 
 1. **Select a Device**
    * Choose an Android Emulator (API 30+) or connect a physical Android device via USB.
